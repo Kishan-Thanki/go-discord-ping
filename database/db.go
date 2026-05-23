@@ -34,12 +34,14 @@ func InitDB(dataSourceName string) error {
 	}
 
 	DB.SetMaxOpenConns(1)
+	DB.SetMaxIdleConns(1)
+	DB.SetConnMaxLifetime(0)
 
 	pragmas := []string{
 		"PRAGMA journal_mode = WAL;",
 		"PRAGMA synchronous = NORMAL;",
 		"PRAGMA temp_store = MEMORY;",
-		"PRAGMA cache_size = -64000;",
+		"PRAGMA cache_size = -16000;", // Limit read cache to 16MB to save RAM
 	}
 	for _, p := range pragmas {
 		if _, err := DB.Exec(p); err != nil {

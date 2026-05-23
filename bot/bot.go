@@ -54,6 +54,8 @@ func Start() {
 		discordgo.IntentsGuildMembers |
 		discordgo.IntentsGuilds
 
+	goBot.StateEnabled = false
+
 	goBot.AddHandler(messageHandler)
 	goBot.AddHandler(slashCommandHandler)
 	goBot.AddHandler(welcomeHandler)
