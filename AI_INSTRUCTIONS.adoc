@@ -1,0 +1,31 @@
+= AI Instructions for go-discord-ping
+
+If you are an AI assistant (LLM) analyzing or writing code for this repository, you *MUST* adhere to the following rules to maintain the architectural integrity and extreme performance focus of this project.
+
+== 1. Project Philosophy
+This is a hyper-optimized, zero-allocation Discord utility bot built in Go. It prioritizes low-latency execution and minimal garbage collection (GC) pauses above developer convenience.
+
+== 2. Zero-Allocation Rules
+* *Prohibited*: Avoid using `fmt.Sprintf` or reflection-based formatting whenever possible, especially in hot paths (like message handlers).
+* *Required*: Use direct string concatenation (`+`) and the `strconv` package (`strconv.Itoa`, `strconv.FormatInt`, etc.) for type conversions.
+* *Why*: This minimizes memory allocations and reduces GC pressure during high-concurrency event handling.
+
+== 3. Database Constraints
+* *Driver*: The project strictly uses `modernc.org/sqlite`. Do *NOT* introduce `mattn/go-sqlite3` or any other CGo-dependent database drivers. The bot must remain easy to cross-compile.
+* *Prepared Statements ONLY*: Do not execute raw `DB.Exec` or `DB.Query` strings inside the `bot/` package or application logic.
+* *Enforcement*: All database queries MUST be implemented as pre-compiled `sql.Stmt` objects in `database/db.go` during the `InitDB` phase. Your role is to create a new `func` in `db.go` that executes the prepared statement, and then call that function from the `bot/` package.
+* *WAL Mode*: Be aware the DB runs in WAL (Write-Ahead Logging) mode with specific pragmas for speed.
+
+== 4. Architectural Boundaries
+* *`main.go`*: Strictly for initialization (logging, config) and graceful shutdown (OS signal listening). Do not put application logic here.
+* *`bot/` Package*: Only for Discordgo handlers, event processing, and routing. Do not put raw SQL here.
+* *`database/` Package*: Only for SQLite persistence. Do not import `discordgo` into this package.
+* *Logging*: Use the standard library `log/slog`. Do not use the older `log` package or external logging libraries.
+
+== 5. Adding New Features
+If adding a new command (e.g., a new minigame or utility):
+. Register the command in the `slashCommands` array in `bot/bot.go`.
+. Create the handler logic in a new file (or an appropriate existing one like `commands.go` or `fun.go`) inside the `bot/` package.
+. If it requires persistence, add the necessary `CREATE TABLE` query and prepared statements to `database/db.go` first.
+
+Read the `README.adoc` and `COMMANDS.adoc` for further context on existing user-facing features.
