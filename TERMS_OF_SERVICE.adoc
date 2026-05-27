@@ -1,25 +1,25 @@
-# Terms of Service for Ping-Bot
+= Terms of Service for Ping-Bot
 
-Last Updated: May 2026
+_Last Updated: May 2026_
 
 By inviting Ping-Bot ("the Bot") to your Discord server or using its features, you agree to these Terms of Service.
 
-## 1. Usage
+== 1. Usage
 
 The Bot is provided "as is" without warranty of any kind. You agree not to abuse the bot's systems, intentionally try to crash it, or use it for malicious purposes.
 
-## 2. Moderation and Actions
+== 2. Moderation and Actions
 
 The Bot includes automated moderation tools (kicking, banning, timeouts) and economy systems. The developers of Ping-Bot are not responsible for any actions taken by the Bot in your server, including accidental bans, loss of virtual currency, or server disruptions. Server administrators are solely responsible for configuring the bot's permissions correctly.
 
-## 3. Availability
+== 3. Availability
 
 We reserve the right to temporarily or permanently suspend the Bot's availability at any time, for any reason, without prior notice.
 
-## 4. Virtual Economy
+== 4. Virtual Economy
 
 The virtual currency (coins), XP, and items within the Bot have no real-world value. They cannot be exchanged, sold, or redeemed for real money. We reserve the right to wipe or modify economy balances if exploits or bugs are discovered.
 
-## 5. Changes to Terms
+== 5. Changes to Terms
 
 We reserve the right to update these Terms of Service at any time. Continued use of the Bot constitutes acceptance of the new terms.
